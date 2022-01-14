@@ -8,6 +8,16 @@
 #define MICROPY_PY_NETWORK              (1)
 #define MICROPY_PY_USOCKET              (1)
 
+// Enable webrepl.
+#define MICROPY_PY_UWEBSOCKET           (1)
+#define MICROPY_PY_WEBREPL              (1)
+#define MICROPY_PY_OS_DUPTERM           (2)
+
+// use vfs's functions for import stat and builtin open
+#define mp_import_stat mp_vfs_import_stat
+#define mp_builtin_open mp_vfs_open
+#define mp_builtin_open_obj mp_vfs_open_obj
+
 // Enable USB Mass Storage with FatFS filesystem.
 #define MICROPY_HW_USB_MSC              (1)
 #define MICROPY_HW_USB_VID              (0x2341)

@@ -7,3 +7,4 @@ include(
     l2cap=True,
     security=True,
 )
+include("$(MPY_DIR)/extmod/webrepl/manifest.py")
