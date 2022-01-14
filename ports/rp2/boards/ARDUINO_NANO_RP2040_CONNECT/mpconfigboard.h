@@ -18,6 +18,10 @@
 #define mp_builtin_open mp_vfs_open
 #define mp_builtin_open_obj mp_vfs_open_obj
 
+#define MICROPY_PY_USSL                  (1)
+#define MICROPY_SSL_MBEDTLS              (1)
+#define MICROPY_PY_USSL_FINALISER        (1)
+
 // Enable USB Mass Storage with FatFS filesystem.
 #define MICROPY_HW_USB_MSC              (1)
 #define MICROPY_HW_USB_VID              (0x2341)

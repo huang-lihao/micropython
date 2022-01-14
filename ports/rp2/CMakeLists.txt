@@ -216,6 +216,96 @@ if (MICROPY_PY_NETWORK_NINAW10)
     )
 endif()
 
+if (MICROPY_PY_USSL AND MICROPY_SSL_MBEDTLS)
+    set(MBEDTLS_LIB_DIR "${MICROPY_DIR}/lib/mbedtls/library")
+    set(MBEDTLS_EXTMOD_DIR "${MICROPY_DIR}/extmod/")
+
+    add_library(micropy_extmod_ussl_mbedtls INTERFACE)
+
+    target_include_directories(micropy_extmod_ussl_mbedtls INTERFACE
+        ${MICROPY_DIR}/lib/mbedtls/include/
+    )
+
+    target_sources(micropy_extmod_ussl_mbedtls INTERFACE
+        ${MBEDTLS_EXTMOD_DIR}/modussl_mbedtls.c
+        ${MBEDTLS_LIB_DIR}/aes.c 
+        ${MBEDTLS_LIB_DIR}/aesni.c 
+        ${MBEDTLS_LIB_DIR}/arc4.c 
+        ${MBEDTLS_LIB_DIR}/asn1parse.c 
+        ${MBEDTLS_LIB_DIR}/asn1write.c 
+        ${MBEDTLS_LIB_DIR}/base64.c 
+        ${MBEDTLS_LIB_DIR}/bignum.c 
+        ${MBEDTLS_LIB_DIR}/blowfish.c 
+        ${MBEDTLS_LIB_DIR}/camellia.c 
+        ${MBEDTLS_LIB_DIR}/ccm.c 
+        ${MBEDTLS_LIB_DIR}/certs.c 
+        ${MBEDTLS_LIB_DIR}/chacha20.c 
+        ${MBEDTLS_LIB_DIR}/chachapoly.c 
+        ${MBEDTLS_LIB_DIR}/cipher.c 
+        ${MBEDTLS_LIB_DIR}/cipher_wrap.c 
+        ${MBEDTLS_LIB_DIR}/cmac.c 
+        ${MBEDTLS_LIB_DIR}/ctr_drbg.c 
+        ${MBEDTLS_LIB_DIR}/debug.c 
+        ${MBEDTLS_LIB_DIR}/des.c 
+        ${MBEDTLS_LIB_DIR}/dhm.c 
+        ${MBEDTLS_LIB_DIR}/ecdh.c 
+        ${MBEDTLS_LIB_DIR}/ecdsa.c 
+        ${MBEDTLS_LIB_DIR}/ecjpake.c 
+        ${MBEDTLS_LIB_DIR}/ecp.c 
+        ${MBEDTLS_LIB_DIR}/ecp_curves.c 
+        ${MBEDTLS_LIB_DIR}/entropy.c 
+        # ${MBEDTLS_LIB_DIR}/entropy_poll.c 
+        ${MBEDTLS_LIB_DIR}/error.c 
+        ${MBEDTLS_LIB_DIR}/gcm.c 
+        ${MBEDTLS_LIB_DIR}/havege.c 
+        ${MBEDTLS_LIB_DIR}/hmac_drbg.c 
+        ${MBEDTLS_LIB_DIR}/md2.c 
+        ${MBEDTLS_LIB_DIR}/md4.c 
+        ${MBEDTLS_LIB_DIR}/md5.c 
+        ${MBEDTLS_LIB_DIR}/md.c 
+        ${MBEDTLS_LIB_DIR}/md_wrap.c 
+        ${MBEDTLS_LIB_DIR}/oid.c 
+        ${MBEDTLS_LIB_DIR}/padlock.c 
+        ${MBEDTLS_LIB_DIR}/pem.c 
+        ${MBEDTLS_LIB_DIR}/pk.c 
+        ${MBEDTLS_LIB_DIR}/pkcs11.c 
+        ${MBEDTLS_LIB_DIR}/pkcs12.c 
+        ${MBEDTLS_LIB_DIR}/pkcs5.c 
+        ${MBEDTLS_LIB_DIR}/pkparse.c 
+        ${MBEDTLS_LIB_DIR}/pk_wrap.c 
+        ${MBEDTLS_LIB_DIR}/pkwrite.c 
+        ${MBEDTLS_LIB_DIR}/platform.c 
+        ${MBEDTLS_LIB_DIR}/platform_util.c 
+        ${MBEDTLS_LIB_DIR}/poly1305.c 
+        ${MBEDTLS_LIB_DIR}/ripemd160.c 
+        ${MBEDTLS_LIB_DIR}/rsa.c 
+        ${MBEDTLS_LIB_DIR}/rsa_internal.c 
+        ${MBEDTLS_LIB_DIR}/sha1.c 
+        ${MBEDTLS_LIB_DIR}/sha256.c 
+        ${MBEDTLS_LIB_DIR}/sha512.c 
+        ${MBEDTLS_LIB_DIR}/ssl_cache.c 
+        ${MBEDTLS_LIB_DIR}/ssl_ciphersuites.c 
+        ${MBEDTLS_LIB_DIR}/ssl_cli.c 
+        ${MBEDTLS_LIB_DIR}/ssl_cookie.c 
+        ${MBEDTLS_LIB_DIR}/ssl_srv.c 
+        ${MBEDTLS_LIB_DIR}/ssl_ticket.c 
+        ${MBEDTLS_LIB_DIR}/ssl_tls.c 
+        # ${MBEDTLS_LIB_DIR}/timing.c 
+        ${MBEDTLS_LIB_DIR}/x509.c 
+        ${MBEDTLS_LIB_DIR}/x509_create.c 
+        ${MBEDTLS_LIB_DIR}/x509_crl.c 
+        # ${MBEDTLS_LIB_DIR}/x509_crt.c 
+        ${MBEDTLS_LIB_DIR}/x509_csr.c 
+        ${MBEDTLS_LIB_DIR}/x509write_crt.c 
+        ${MBEDTLS_LIB_DIR}/x509write_csr.c 
+        ${MBEDTLS_LIB_DIR}/xtea.c
+    )
+
+    target_link_libraries(${MICROPY_TARGET} micropy_extmod_ussl_mbedtls)
+    get_target_property(SSL_MBEDTLS_INCLUDE micropy_extmod_ussl_mbedtls INTERFACE_INCLUDE_DIRECTORIES)
+    list(APPEND MICROPY_INC_CORE ${SSL_MBEDTLS_INCLUDE})
+endif()
+
 # Define mpy-cross flags and frozen manifest
 set(MICROPY_CROSS_FLAGS -march=armv7m)
 if (NOT MICROPY_FROZEN_MANIFEST)
